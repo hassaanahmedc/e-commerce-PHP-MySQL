@@ -42,9 +42,9 @@ echo <<<_END
         <title>Job Post</title>
     </head>
     <body>
-        <h1>Add a mew item!</h1>
+        <h1>Add a new item!</h1>
         <div class="job-container input-container">
-            <form action="home.php" method="post" enctype="multipart/form-data">
+            <form action="add_item.php" method="post" enctype="multipart/form-data">
                 <pre>
                     <label for="name">Item name</label>
                     <input type="text" id="name" name="name" required>
@@ -73,14 +73,11 @@ echo <<<_END
                     <input type="file" id="images" name="images" multiple>
 
                     <input type="submit" id="submit" value="Add item" class="login" name="submit">
-                    <button onClick="location.href='../home.php'">Show Results</button>
+                    <button onClick="location.href='index.php'">Show Results</button>
                 </pre>
             </form>
         </div>
     </body>
 </html>
 _END;
-
-
-
 ?>

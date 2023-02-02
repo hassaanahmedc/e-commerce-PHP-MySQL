@@ -1,6 +1,6 @@
 <?php
     $host = 'localhost';
-    $data = 'products';
+    $data = 'cart';
     $user = 'root';
     $pass = '';
     $chrs = 'utf8mb4';
