@@ -1,8 +1,8 @@
 <?php
-    $host = 'localhost';
-    $data = 'cart';
+    $host = '127.0.0.1';
+    $data = 'shopeasedb';
     $user = 'root';
-    $pass = '';
+    $pass = '123456789';
     $chrs = 'utf8mb4';
     $attr = "mysql:host=$host;dbname=$data;charset=$chrs";
     $opts = 

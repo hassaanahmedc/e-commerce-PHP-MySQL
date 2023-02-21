@@ -23,7 +23,7 @@ if (
     $img = $_FILES["images"]['name'];
     move_uploaded_file($_FILES['images']['tmp_name'], 'imgs/'. $_FILES['images']['name']);
             
-    $query = $pdo->prepare("INSERT INTO items(name, description, category, availability, price, stock, img, company) VALUES (?,?,?,?,?,?,?,?)");
+    $query = $pdo->prepare("INSERT INTO products(name, description, category, availability, price, stock, img, company) VALUES (?,?,?,?,?,?,?,?)");
     $query->bindParam(1, $na, PDO::PARAM_STR);
     $query->bindParam(2, $des, PDO::PARAM_STR);
     $query->bindParam(3, $category, PDO::PARAM_STR);
@@ -73,7 +73,7 @@ echo <<<_END
                     <input type="file" id="images" name="images" multiple>
 
                     <input type="submit" id="submit" value="Add item" class="login" name="submit">
-                    <button onClick="location.href='index.php'">Show Results</button>
+                    <button onClick="location.href='../index.php'">Show Results</button>
                 </pre>
             </form>
         </div>

@@ -1,11 +1,11 @@
 <?php
 require_once 'verify.php';
 
-$latest_item_query = "SELECT * FROM items ORDER BY id DESC";
+$latest_item_query = "SELECT * FROM products ORDER BY product_id DESC";
 $latest_items = $pdo->query($latest_item_query);
 function render_items($latest_items){
     while ($row = $latest_items->fetch(PDO::FETCH_ASSOC)){
-        $id = $row['id'];
+        $id = $row['product_id'];
         $name = $row['name'];
         $prize = $row['price'];
         $image = $row['img'];
@@ -13,7 +13,7 @@ function render_items($latest_items){
         <div class="items">
             <img src="imgs/$image" alt="" class="images">
             <div class="item_details">
-            <a href='/Cart/product.php?id=$id' class="item_name">$name</a>
+            <a href='product.php?id=$id' class="item_name">$name</a>
                 <p class="item_price">Rs $prize</p>
                 <i class="fa-solid fa-star"></i>
                 <i class="fa-solid fa-star"></i>    
@@ -24,12 +24,12 @@ function render_items($latest_items){
         </div><br>
         _END;
     }
-} 
-$watches_query = "SELECT * FROM items WHERE category = 'Watches'";
+}
+$watches_query = "SELECT * FROM products WHERE category = 'Watches'";
 $watches = $pdo->query($watches_query);
 function render_watches($watches){
     while ($row = $watches->fetch(PDO::FETCH_ASSOC)){
-        $id = $row['id'];
+        $id = $row['product_id'];
         $name = $row['name'];
         $prize = $row['price'];
         $image = $row['img'];
@@ -37,7 +37,7 @@ function render_watches($watches){
         <div class="items">
             <img src="imgs/$image" alt="" class="images">
             <div class="item_details">
-            <a href='/Cart/product.php?id=$id' class="item_name">$name</a>
+            <a href='product.php?id=$id' class="item_name">$name</a>
                 <p class="item_price">Rs $prize</p>
                 <i class="fa-solid fa-star"></i>
                 <i class="fa-solid fa-star"></i>    
@@ -50,11 +50,11 @@ function render_watches($watches){
     }
 }
 
-$electronics_query = "SELECT * FROM items WHERE category = 'electronics'";
+$electronics_query = "SELECT * FROM products WHERE category = 'electronics'";
 $electronics = $pdo->query($electronics_query);
 function render_electronics($electronics){
     while ($row = $electronics->fetch(PDO::FETCH_ASSOC)){
-        $id = $row['id'];
+        $id = $row['product_id'];
         $name = $row['name'];
         $prize = $row['price'];
         $image = $row['img'];
@@ -62,7 +62,7 @@ function render_electronics($electronics){
         <div class="items">
             <img src="imgs/$image" alt="" class="images">
             <div class="item_details">
-            <a href='/Cart/product.php?id=$id' class="item_name">$name</a>
+            <a href='product.php?id=$id' class="item_name">$name</a>
                 <p class="item_price">Rs $prize</p>
                 <i class="fa-solid fa-star"></i>
                 <i class="fa-solid fa-star"></i>    
@@ -75,11 +75,11 @@ function render_electronics($electronics){
     }
 }
 
-$cosmetics_query = "SELECT * FROM items WHERE category = 'cosmetics'";
+$cosmetics_query = "SELECT * FROM products WHERE category = 'cosmetics'";
 $cosmetics = $pdo->query($cosmetics_query);
 function render_cosmetics($cosmetics){
     while ($row = $cosmetics->fetch(PDO::FETCH_ASSOC)){
-        $id = $row['id'];
+        $id = $row['product_id'];
         $name = $row['name'];
         $prize = $row['price'];
         $image = $row['img'];
@@ -87,7 +87,7 @@ function render_cosmetics($cosmetics){
         <div class="items">
             <img src="imgs/$image" alt="" class="images">
             <div class="item_details">
-            <a href='/Cart/product.php?id=$id' class="item_name">$name</a>
+            <a href='product.php?id=$id' class="item_name">$name</a>
                 <p class="item_price">Rs $prize</p>
                 <i class="fa-solid fa-star"></i>
                 <i class="fa-solid fa-star"></i>
@@ -100,11 +100,11 @@ function render_cosmetics($cosmetics){
     }
 }
 
-$sports_query = "SELECT * FROM items WHERE category = 'sports' ORDER BY id DESC";
+$sports_query = "SELECT * FROM products WHERE category = 'sports' ORDER BY product_id DESC";
 $sports = $pdo->query($sports_query);
 function render_sports($sports){
     while ($row = $sports->fetch(PDO::FETCH_ASSOC)){
-        $id = $row['id'];
+        $id = $row['product_id'];
         $name = $row['name'];
         $prize = $row['price'];
         $image = $row['img'];
@@ -112,10 +112,10 @@ function render_sports($sports){
         <div class="items">
             <img src="imgs/$image" alt="" class="images">
             <div class="item_details">
-                <a href='/Cart/product.php?id=$id' class="item_name">$name</a>
+                <a href='product.php?id=$id' class="item_name">$name</a>
                 <p class="item_price">Rs $prize</p>
                 <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>    
+                <i class="fa-solid fa-star"></i>
                 <i class="fa-solid fa-star"></i>
                 <i class="fa-solid fa-star"></i>
                 <i class="fa-regular fa-star"></i>
@@ -129,7 +129,7 @@ function header_temp(){
     echo <<<_END
     <div class="nav_container">
         <nav class='navbar'>
-            <h1 class="navtxt">Daraz Shopping</h1>
+            <h1 class="navtxt">ShopEase</h1>
             <li><a href="">Home</a></li>
             <li><a href="">Products</a></li>
             <li><a href="">My Cart</a></li>
