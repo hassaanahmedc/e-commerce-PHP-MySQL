@@ -60,6 +60,7 @@ function add_product_in_cart($pdo, $product, $cart_id)
             $stmt->bindParam(':cid', $c_id, PDO::PARAM_INT);
             $stmt->bindParam(':pid', $p_id, PDO::PARAM_INT);
             $stmt->execute();
+
         }else{
             $total_price = $p_price * $qty;
             $stmt = $pdo->prepare("INSERT INTO cart_details (cart_id, product_id, quantity, price) VALUES(:cid, :pid, :qty, :price)");
@@ -68,6 +69,7 @@ function add_product_in_cart($pdo, $product, $cart_id)
             $stmt->bindParam(':qty',  $qty, PDO::PARAM_INT);
             $stmt->bindParam(':price',  $total_price, PDO::PARAM_INT);
             $stmt->execute();
+
         }
 
     } catch (PDOException $e) {
@@ -79,9 +81,8 @@ function add_product_in_cart($pdo, $product, $cart_id)
 function create_cart($pdo, $product)
 {
     if (!isset($_SESSION['user_id'])) {
-        throw new Exception("Please login first!");
+        return "Please login first";
     }
-
     try {
         $user_id = $_SESSION['user_id'];
         $datetime = date('Y-m-d H:i:s');
@@ -102,9 +103,11 @@ function create_cart($pdo, $product)
     
             $cart_id = $pdo->lastInsertId();
         }
-        
         add_product_in_cart($pdo, $product, $cart_id);
+        return "Items added successfully to your cart!";
+        
     } catch (PDOException $e) {
         throw new Exception("An error occurred: " . $e->getMessage());
     }
 }
+?>

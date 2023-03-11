@@ -1,21 +1,9 @@
 <?php
+require_once 'cart_functions.php';
 require_once 'verify.php';
-function render_selected_item($pdo)
-{
-    if (isset($_GET['id'])) {
-        $pid = $_GET['id'];
-        $query = "SELECT * FROM products WHERE product_id = $pid";
-        $result = $pdo->query($query);
-        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            $name = $row['name'];
-            $prize = $row['price'];
-            $image = $row['img'];
-            include 'product_card.php';
-        }
-    }
-}
-
+session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,17 +26,15 @@ function render_selected_item($pdo)
                 
             </nav>
         </div>
-</head>
+</head>`
 
 <body>
-    <div class="product_wrapper">
-        <?php render_selected_item($pdo) ?>
-        <div class="similar_items_container">
-            <p class='similar_items'>Similar Products</p>
-        </div>
+    <div class="user_msg" style="text-align:center; margin: 0 auto;">
+        <h1 ><?php echo create_cart($pdo, $product); ?></h1>
+        <a href="index.php">Shop more</a>
+        <a href="cart.php">Show cart</a>
 
     </div>
-
 </body>
 
 </html>

@@ -13,7 +13,18 @@ require_once 'verify.php';
     <link rel="stylesheet" href="style/style.css">
 
     <header>
-        <?php header_temp() ?>
+    <div class="nav_container">
+            <nav class="navbar">
+                <h1 class="navtxt">ShopEase</h1>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="cart.php">My Cart</a></li>
+                <li><a href="">Contact Us</a></li>
+                <li><a href="auth/login.php">Login</a></li>
+                <li><a href="auth/signup.php">Signup</a></li>
+                <li><a href="auth/logout.php">Logout</a></li>
+                
+            </nav>
+        </div>
 
         <div class="img_container">
             <img class='img1' src="header_imgs/new.jpg" alt="imgae1">
