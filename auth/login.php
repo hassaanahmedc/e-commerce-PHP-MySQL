@@ -31,9 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     //we will echo the error variable we created to display any potential error
-    if (isset($error_msg)) {
-        echo "<h4>$error_msg</h4>";
-    }
+
 }
 ?>
 <!DOCTYPE html>
@@ -55,6 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h1>Sign In</h1>
             <input type="email" class="field" id="email" name="email" placeholder="Your Email">
             <input type="password" class="field" id="password" name="password" placeholder="Your Password">
+            <span style="color: red;"><?php     if (isset($error_msg)) {
+        echo "<h4>$error_msg</h4>";
+    } ?></span>
             <button type="submit" class="field btn" id="submit" name="submit">Login</button>
             <span class='forgot_pswd'><a href="">Forgot Passowrd / Username?</a></span>
             <span class='signup'><a href="signup.php">Create an account</a><i class="fa-sharp fa-regular fa-arrow-right-long"></i></span>

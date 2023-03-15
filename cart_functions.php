@@ -1,14 +1,14 @@
 <?php
-require_once 'verify.php';
-
+require_once 'verify.php'; 
+                     
 //funtion to get details about a specific product by it product ID
 function fetch_product_details($pdo)
 {
-    if (!isset($_GET['product_id'])) {
+    if (!isset($_POST['product_id'])) {
         throw new Exception('Please select a product!');
     }
-    $pid = isset($_GET['product_id']) && is_numeric($_GET['product_id']) ? intval($_GET['product_id']) : null;
-    $qty = isset($_GET['quantity']) && is_numeric($_GET['quantity']) ? intval($_GET['quantity']) : null;
+    $pid = isset($_POST['product_id']) && is_numeric($_POST['product_id']) ? intval($_POST['product_id']) : null;
+    $qty = isset($_POST['quantity']) && is_numeric($_POST['quantity']) ? intval($_POST['quantity']) : null;
 
     $query = "SELECT * FROM products WHERE product_id = ?";
     $stmt = $pdo->prepare($query);

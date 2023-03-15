@@ -15,22 +15,22 @@ session_start();
     <link rel="stylesheet" href="style/style.css">
     <title>Product</title>
     <div class="nav_container">
-            <nav class="navbar">
-                <h1 class="navtxt">ShopEase</h1>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="cart.php">My Cart</a></li>
-                <li><a href="">Contact Us</a></li>
-                <li><a href="auth/login.php">Login</a></li>
-                <li><a href="auth/signup.php">Signup</a></li>
-                <li><a href="auth/logout.php">Logout</a></li>
-                
-            </nav>
-        </div>
+        <nav class="navbar">
+            <h1 class="navtxt">ShopEase</h1>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="cart.php">My Cart</a></li>
+            <li><a href="">Contact Us</a></li>
+            <li><a href="auth/login.php">Login</a></li>
+            <li><a href="auth/signup.php">Signup</a></li>
+            <li><a href="auth/logout.php">Logout</a></li>
+
+        </nav>
+    </div>
 </head>`
 
 <body>
     <div class="user_msg" style="text-align:center; margin: 0 auto;">
-        <h1 ><?php echo create_cart($pdo, $product); ?></h1>
+        <h1><?php echo create_cart($pdo, $product); ?></h1>
         <a href="index.php">Shop more</a>
         <a href="cart.php">Show cart</a>
 

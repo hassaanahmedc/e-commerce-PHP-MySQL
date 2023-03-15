@@ -13,7 +13,7 @@
         </div>
         <p class="product_price">Rs. <?php echo $prize ?></p>
         <div class="buy_section">
-            <form method='GET' action='cart_status.php'>
+            <form method='POST' action='cart_status.php'>
                 <input type='hidden' name='product_id' value='<?php echo $pid?>'>
                 <span class='quantity_text'>Quantity</span>
                 <input type="number" class='quantity' name='quantity' value='1' min='1'>

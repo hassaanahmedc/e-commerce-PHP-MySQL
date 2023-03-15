@@ -1,6 +1,7 @@
 <?php
 require_once 'verify.php';
 session_start();
+session_regenerate_id();
 $grand_total =  0;
 function get_cart_items($pdo)
 {
@@ -59,6 +60,9 @@ function get_cart_items($pdo)
                 _END;
             $grand_total += $sub_total;
         }
+        
+        $_SESSION['sub_total'] = $grand_total;
+
         remove_cart_item($pdo);
         update_cart($pdo);
     }
@@ -89,8 +93,7 @@ function update_cart($pdo)
             $item_price = $item_prices[$i];
             $qty = $qtys[$i];
             $sub_total = $item_price * $qty;
-            $pid = $_POST['pid'][$i]; // assuming you have a hidden input field with the product id for each item
-
+            $pid = $_POST['pid'][$i]; 
             $query = $pdo->prepare("UPDATE cart_details SET quantity=:qty, price=:sub_total WHERE cart_id=(SELECT cart_id FROM cart WHERE user_id=:user_id) AND product_id=:pid");
 
             $query->bindParam(":qty", $qty, PDO::PARAM_INT);
@@ -104,6 +107,9 @@ function update_cart($pdo)
                 echo "Something went wrong";
             }
         }
+    }
+    if (isset($_POST['place_order'])){
+        header('Location: order.php');
     }
 }
 ?>
@@ -148,16 +154,18 @@ function update_cart($pdo)
                     <?php get_cart_items($pdo); ?>
                 </tbody>
             </table>
-            <div class="subtotal">
-                <span>Subtotal</span>
-                <span><?php echo $grand_total ?></span>
-            </div>
-            <div class="btn">
-                <button type="submit" name="update" class="cart_update">Update</button>
-                <button type="submit" name="place_order" class="order_place">Update</button>
+            <div class="cart_bottom">
+                <div class="subtotal">
+                    <span>Subtotal</span>
+                    <span><?php echo $grand_total ?></span>
+                </div>
+                <input type="hidden" name="sub_total" value="<?php echo $grand_total ?>">
+                <div class="cart_btn">
+                    <button type="submit" name="update" class="cart_update">Update</button>
+                    <button type="submit" name="place_order" class="order_place">Checkout</button>
+                </div>
             </div>
         </form>
     </div>
 </body>
-
 </html>
