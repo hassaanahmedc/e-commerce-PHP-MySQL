@@ -4,7 +4,6 @@ require_once 'verify.php';
 require_once 'order_functions.php';
 
 $summary = order_summary(400, 1000);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +30,7 @@ $summary = order_summary(400, 1000);
 
 <body>
     <div class="order_content_wrapper">
-        <form action="">
+        <form action="order_status.php" method="post">
             <div class="form_contaitner">
                 <div class="shipping_details">
                     <h5 class='cart_heading'>Order Details</h5>
@@ -44,12 +43,13 @@ $summary = order_summary(400, 1000);
                     <div class="input-province">
                         <label for="province">Province</label>
                         <select name="province" class="field" id="province">
+                            <option value="Default">Not Selected</option>
                             <option value="sindh">Sindh</option>
                             <option value="Punjab">Punjab</option>
                             <option value="Balouchistan">Balouchistan</option>
                             <option value="FATA">FATA</option>
                             <option value="Gilgit-Baltistan">Gilgit-Baltistan</option>
-                            <option value="khyner-Pakhtunkhwa">Khyner-Pakhtunkhwa"</option>
+                            <option value="khyner-Pakhtunkhwa">Khyner-Pakhtunkhwa</option>
                         </select>
                     </div>
                     <div class="split">
