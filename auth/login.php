@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <span style="color: red;"><?php     if (isset($error_msg)) {
         echo "<h4>$error_msg</h4>";
     } ?></span>
-            <button type="submit" class="field btn" id="submit" name="submit">Login</button>
+            <button type="submit" class="field auth_btns" id="submit" name="submit">Login</button>
             <span class='forgot_pswd'><a href="">Forgot Passowrd / Username?</a></span>
             <span class='signup'><a href="signup.php">Create an account</a><i class="fa-sharp fa-regular fa-arrow-right-long"></i></span>
         </div>

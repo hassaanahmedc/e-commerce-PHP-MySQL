@@ -88,7 +88,7 @@ require_once 'order_functions.php';
 <body>
     <div class="order_placed_wrapper" style="background: white; width: 75%; margin:0 auto">
         <div class="user_msg" style="text-align:center; margin: 0 auto; padding: 2em; border-radius: 8px;">
-            <?php echo order_details($pdo); ?>
+            <?php echo place_order($pdo); ?>
         </div>
 
     </div>

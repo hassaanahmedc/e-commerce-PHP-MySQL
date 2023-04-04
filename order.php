@@ -13,6 +13,7 @@ $summary = order_summary(400, 1000);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="style/orderPg.css">
     <link rel="stylesheet" href="style/style.css">
     <title>Product</title>
     <div class="nav_container">
@@ -33,7 +34,7 @@ $summary = order_summary(400, 1000);
         <form action="order_status.php" method="post">
             <div class="form_contaitner">
                 <div class="shipping_details">
-                    <h5 class='cart_heading'>Order Details</h5>
+                    <h5 class='order_heading'>Order Details</h5>
 
                     <div class="input-fullname">
                         <label for="fullname">Full Name</label>
@@ -44,7 +45,7 @@ $summary = order_summary(400, 1000);
                         <label for="province">Province</label>
                         <select name="province" class="field" id="province">
                             <option value="Default">Not Selected</option>
-                            <option value="sindh">Sindh</option>
+                            <option value="Sindh">Sindh</option>
                             <option value="Punjab">Punjab</option>
                             <option value="Balouchistan">Balouchistan</option>
                             <option value="FATA">FATA</option>
@@ -74,7 +75,7 @@ $summary = order_summary(400, 1000);
 
                 </div>
                 <div class="order_summary">
-                    <h3 class='cart_heading'>Discount and Payment</h3>
+                    <h3 class='order_heading'>Discount and Payment</h3>
                     <div class="payment_method">
                         <div class="cod">
                             <label for="cod">

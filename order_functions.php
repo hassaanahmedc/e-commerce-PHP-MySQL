@@ -13,6 +13,9 @@ function order_summary($delivery_fee = "Free", $promo = 0)
             $discount = $promo;
             $subtotal -= $discount;
         }
+        if ($subtotal < 0){
+            $subtotal = 0;
+        }
         $summary = array(
             'total_items' => $_SESSION['sub_total'],
             'delivery_fee' => $delivery,
@@ -25,71 +28,81 @@ function order_summary($delivery_fee = "Free", $promo = 0)
     }
 }
 
-function order_details($pdo)
+function place_order($pdo)
 {
-    if (isset($_POST['fullname']) && isset($_POST['province']) && isset($_POST['city']) && isset($_POST['zip'])
-        && isset($_POST['address']) && isset($_POST['order_place'])) {
-        $fullname = filter_input(INPUT_POST, 'fullname', FILTER_SANITIZE_SPECIAL_CHARS);
-        if (!preg_match('/^[a-zA-Z]+$/', $fullname)) {
-            echo "Name is not Valid";
-        } else {
-            $province = filter_input(INPUT_POST, 'province', FILTER_SANITIZE_SPECIAL_CHARS);
-            $provinces = array("Sindh", "Punjab", "Balouchistan", "FATA", "Gilgit-Baltistan", "Khyner-Pakhtunkhwa");
-            if (!in_array($province, $provinces)) {
-                echo "Invalid Province";
-            } else {
-                $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_SPECIAL_CHARS);
-                if (!preg_match('/^[a-zA-Z]+$/', $city)) {
-                    echo "City is not Valid";
-                } else {
-                    $zip = filter_input(INPUT_POST, 'zip', FILTER_VALIDATE_INT);
-                    if (!preg_match('/^[0-9]+$/', $zip)) {
-                        echo "Invalid zip code input. Only numeric values are allowed.";
-                    } else {
-                        $area = filter_input(INPUT_POST, 'area', FILTER_SANITIZE_SPECIAL_CHARS);
-                        if (!preg_match('/^[a-zA-Z0-9\s]+$/', $area)) {
-                            echo "Area is not Valid";
-                        } else {
-                            $address = filter_input(INPUT_POST, 'address', FILTER_SANITIZE_SPECIAL_CHARS);
-                            if (!preg_match('/^[a-zA-Z0-9\s]+$/', $address)) {
-                                echo "Address is not Valid";
-                            } else {
-                                try {
-                                    $datetime = date('Y-m-d H:i:s');
-                                    $get_total = order_summary(400, 1000);
-                                    $query = fetch_cart($pdo);
-                                    $row = $query->fetch(PDO::FETCH_ASSOC);
+    $requiredFields = ['fullname', 'province', 'city', 'zip', 'address'];
+    $valid_provinces = ['Sindh', 'Punjab', 'Balouchistan', 'FATA', 'Gilgit-Baltistan', 'Khyber-Pakhtunkhwa'];
 
-                                    $stmt = $pdo->prepare("INSERT INTO orders(user_id, order_date, order_total, 
-                                    shipping_address, shipping_state, shipping_zip, shipping_city, full_name) VALUES
-                                    (:uid, :order_date, :total_payment, :address, :province, :zip_code, :city, :name)");
-
-                                    $stmt->bindParam(':uid', $row['user_id'], PDO::PARAM_STR);
-                                    $stmt->bindParam(':order_date', $datetime, PDO::PARAM_STR);
-                                    $stmt->bindParam(':total_payment', $get_total['sub_total'], PDO::PARAM_STR);
-                                    $stmt->bindParam(':address', $address, PDO::PARAM_STR);
-                                    $stmt->bindParam(':province', $province, PDO::PARAM_STR);
-                                    $stmt->bindParam(':zip_code', $zip, PDO::PARAM_INT);
-                                    $stmt->bindParam(':city', $city, PDO::PARAM_STR);
-                                    $stmt->bindParam(':name', $fullname, PDO::PARAM_STR);
-
-                                    $stmt->execute();
-                                    echo <<<_END
-                                    <h1 style="padding: 1em;">Your Order Has Been Placed!</h1>
-                                    <p style="margin:1em; font-size: 1.1rem;">Thank you for ordering with us! We'll contact you by email with your order details.</p>
-                                    <a href="index.php">Shop more</a>
-                                    _END; 
-                                } catch (PDOException $e) {
-                                    throw new Exception("An error occurred: " . $e->getMessage());
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+    $errors = [];
+    foreach ($requiredFields as $field) {
+        if (empty($_POST[$field])) {
+            $errors[$field] = 'This field is required';
         }
-    } else {
-        echo "<h4>Please fill the requirements</h4>";
     }
+
+    $fullname = filter_input(INPUT_POST, 'fullname', FILTER_SANITIZE_SPECIAL_CHARS);
+    if (!preg_match('/^[a-zA-Z\s]+$/', $fullname)) {
+        echo "Invalid name input. Only alphabetic characters are allowed.";
+        return;
+    }
+
+    $province = filter_input(INPUT_POST, 'province', FILTER_SANITIZE_SPECIAL_CHARS);
+    if (!in_array($province, $valid_provinces)) {
+        echo "Invalid province input.";
+        return;
+    }
+
+    $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_SPECIAL_CHARS);
+    if (!preg_match('/^[a-zA-Z]+$/', $city)) {
+        echo "Invalid city input. Only alphabetic characters are allowed.";
+        return;
+    }
+
+    $zip = filter_input(INPUT_POST, 'zip', FILTER_VALIDATE_INT);
+    if (!is_int($zip)) {
+        echo "Invalid zip code input. Only numeric values are allowed.";
+        return;
+    }
+
+    $area = filter_input(INPUT_POST, 'area', FILTER_SANITIZE_SPECIAL_CHARS);
+    if (!preg_match('/^[a-zA-Z0-9\s]+$/', $area)) {
+        echo "Invalid area input.";
+        return;
+    }
+
+    $address = filter_input(INPUT_POST, 'address', FILTER_SANITIZE_SPECIAL_CHARS);
+    if (!preg_match('/^[a-zA-Z0-9\s]+$/', $address)) {
+        echo "Invalid address input.";
+        return;
+    }
+
+    try {
+        $datetime = date('Y-m-d H:i:s');
+        $get_total = order_summary(400, 1000);
+        $query = fetch_cart($pdo);
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+
+        $stmt = $pdo->prepare("INSERT INTO orders(user_id, order_date, order_total, 
+        shipping_address, shipping_state, shipping_zip, shipping_city, full_name) VALUES
+        (:uid, :order_date, :total_payment, :address, :province, :zip_code, :city, :name)");
+
+        $stmt->bindParam(':uid', $row['user_id'], PDO::PARAM_STR);
+        $stmt->bindParam(':order_date', $datetime, PDO::PARAM_STR);
+        $stmt->bindParam(':total_payment', $get_total['sub_total'], PDO::PARAM_STR);
+        $stmt->bindParam(':address', $address, PDO::PARAM_STR);
+        $stmt->bindParam(':province', $province, PDO::PARAM_STR);
+        $stmt->bindParam(':zip_code', $zip, PDO::PARAM_INT);
+        $stmt->bindParam(':city', $city, PDO::PARAM_STR);
+        $stmt->bindParam(':name', $fullname, PDO::PARAM_STR);
+
+        $stmt->execute();
+        echo <<<_END
+        <h1 style="padding: 1em;">Your Order Has Been Placed!</h1>
+        <p style="margin:1em; font-size: 1.1rem;">Thank you for ordering with us! We'll contact you by email with your order details.</p>
+        <a href="index.php">Shop more</a>
+        _END; 
+    } catch (PDOException $e) {
+        throw new Exception("An error occurred: " . $e->getMessage());
+    } 
 }
 ?>

@@ -81,7 +81,8 @@ function add_product_in_cart($pdo, $product, $cart_id)
 function create_cart($pdo, $product)
 {
     if (!isset($_SESSION['user_id'])) {
-        return "Please login first";
+        echo "<h1>Please login first</h1>";
+        exit;
     }
     try {
         $user_id = $_SESSION['user_id'];
@@ -104,7 +105,11 @@ function create_cart($pdo, $product)
             $cart_id = $pdo->lastInsertId();
         }
         add_product_in_cart($pdo, $product, $cart_id);
-        return "Items added successfully to your cart!";
+        echo <<<_END
+            <h1>Items added successfully to your cart!</h1>
+            <a href="index.php">Shop more</a>
+            <a href="cart.php">Show cart</a>
+        _END;
         
     } catch (PDOException $e) {
         throw new Exception("An error occurred: " . $e->getMessage());

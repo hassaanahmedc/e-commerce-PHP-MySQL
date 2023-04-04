@@ -5,6 +5,7 @@ function fetch_cart($pdo)
 {
     if (!isset($_SESSION['user_id'])) {
         echo "<h2 style='text-align:center;'>Please login first!</h2>";
+        exit;
     } else {
         $uid = $_SESSION['user_id'];
         $query = $pdo->prepare("SELECT 
@@ -37,7 +38,6 @@ function get_cart_items($pdo)
 {
     global $grand_total;
     $query = fetch_cart($pdo);
-
     while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
         $user_id = $row['user_id'];
         $pid = $row['pid'];
@@ -48,22 +48,22 @@ function get_cart_items($pdo)
         $sub_total = $row['sub_total'];
 
         echo <<<_END
-                <tr>
-                    <td class='t_img'><a href="product.php?id=$pid"><img src="imgs/$image" alt=""></a></td>
-                    <td>
-                        <a href="product.php?id=$pid">$Product_name</a>
-                        <br>
-                        <a href="cart.php?pid=$pid">Remove items</a>
-                    </td>
-                    <td>Rs $item_price</td>
-                    <td>
-                    <input type="hidden" name="pid[]" value="$pid">
-                    <input type="hidden" name="item_price[]" value="$item_price">
-                    <input type="number" style='width: 50px;' name="qty[]" value='$qty' min='1'>
+            <tr>
+                <td class='t_img'><a href="product.php?id=$pid"><img src="imgs/$image" alt=""></a></td>
+                <td>
+                    <a href="product.php?id=$pid">$Product_name</a>
+                    <br>
+                    <a href="cart.php?pid=$pid">Remove items</a>
                 </td>
-                    <td>Rs. $sub_total</td>
-                </tr>
-                _END;
+                <td>Rs $item_price</td>
+                <td>
+                <input type="hidden" name="pid[]" value="$pid">
+                <input type="hidden" name="item_price[]" value="$item_price">
+                <input type="number" style='width: 50px;' name="qty[]" value='$qty' min='1'>
+            </td>
+                <td>Rs. $sub_total</td>
+            </tr>
+            _END;
         $grand_total += $sub_total;
     }
 

@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 session_regenerate_id();
 require_once 'verify.php';
@@ -12,6 +13,7 @@ require_once 'cart_crud.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="style/cartPg.css">
     <link rel="stylesheet" href="style/style.css">
     <title>Product</title>
     <div class="nav_container">
@@ -30,8 +32,8 @@ require_once 'cart_crud.php';
 
 <body>
     <div class="cart_content_wrapper">
-        <h1 class='cart_heading'>Shopping Cart</h1>
         <form action="cart.php" method="post">
+            <h1 class='cart_heading'>Shopping Cart</h1>
             <table class="cart_table">
                 <thead>
                     <tr>
@@ -46,14 +48,14 @@ require_once 'cart_crud.php';
                 </tbody>
             </table>
             <div class="cart_bottom">
-                <div class="subtotal">
+                <div class="cart_total">
                     <span>Subtotal</span>
-                    <span><?php echo $grand_total ?></span>
+                    <span>Rs. <?php echo $grand_total ?></span>
                 </div>
                 <input type="hidden" name="sub_total" value="<?php echo $grand_total ?>">
-                <div class="cart_btn">
-                    <button type="submit" name="update" class="cart_update">Update</button>
-                    <button type="submit" name="place_order" class="order_place">Checkout</button>
+                <div class="cart_btns">
+                    <button type="submit" name="update" class="btns cart_update">Update Items</button>
+                    <button type="submit" name="place_order" class="btns order_place">Checkout order</button>
                 </div>
             </div>
         </form>
@@ -61,3 +63,4 @@ require_once 'cart_crud.php';
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

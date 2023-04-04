@@ -30,10 +30,7 @@ session_start();
 
 <body>
     <div class="user_msg" style="text-align:center; margin: 0 auto;">
-        <h1><?php echo create_cart($pdo, $product); ?></h1>
-        <a href="index.php">Shop more</a>
-        <a href="cart.php">Show cart</a>
-
+       <?php create_cart($pdo, $product); ?>
     </div>
 </body>
 

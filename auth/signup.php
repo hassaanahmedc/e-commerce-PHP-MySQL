@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="checkbox" check="checked" name='tos'>
                 <span>I agree to all statements in <a class='txt-underline'>Terms of Services</a></span>
             </label>
-            <button type="submit" class="field btn" id="submit" name="register">Register</button>
+            <button type="submit" class="field auth_btns" id="submit" name="register">Register</button>
             <!-- <span class='forgot_pswd'><a href="">Forgot Passowrd / Username?</a></span> -->
             <span class='forgot_pswd'>
                 <P>Already have an account? <a href="login.php">login</a><i class="fa-sharp fa-regular fa-arrow-right-long"></i></P>

@@ -5,10 +5,12 @@ function render_items_by_category($pdo, $category = null)
 {
     $query = "SELECT * FROM products ";
     if ($category !== null) {
-        $query .= "WHERE category = :category ";
+        $query .= "WHERE category = :category ORDER BY product_id DESC;";
+    } else {
+        $query .= "ORDER BY product_id DESC";
     }
-    $query .= "ORDER BY product_id DESC";
     $stmt = $pdo->prepare($query);
+    
     if ($category !== null) {
         $stmt->bindValue(':category', $category, PDO::PARAM_STR);
     }
@@ -35,5 +37,19 @@ function render_items_by_category($pdo, $category = null)
     }
 }
 
+function render_selected_item($pdo, )
+{ 
+    if (isset($_GET['id'])) {
 
+        $pid = $_GET['id'];
+        $details = array();
+
+        $query = "SELECT * FROM products WHERE product_id = $pid";
+        $result = $pdo->query($query);
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $details[] = $row;
+        }
+        return $details;
+    }
+}  
 ?>

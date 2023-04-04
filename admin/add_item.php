@@ -1,5 +1,5 @@
 <?php
-require_once "verify.php";
+require_once "../verify.php";
 
 if (
     isset($_POST['name']) &&
@@ -21,7 +21,7 @@ if (
 
     //image handling
     $img = $_FILES["images"]['name'];
-    move_uploaded_file($_FILES['images']['tmp_name'], 'imgs/'. $_FILES['images']['name']);
+    move_uploaded_file($_FILES['images']['tmp_name'], '../imgs/'. $_FILES['images']['name']);
             
     $query = $pdo->prepare("INSERT INTO products(name, description, category, availability, price, stock, img, company) VALUES (?,?,?,?,?,?,?,?)");
     $query->bindParam(1, $na, PDO::PARAM_STR);
@@ -39,7 +39,7 @@ if (
 echo <<<_END
 <html>
     <head>
-        <title>Job Post</title>
+        <title>Add Item</title>
     </head>
     <body>
         <h1>Add a new item!</h1>
