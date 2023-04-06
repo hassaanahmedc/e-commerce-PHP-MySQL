@@ -79,14 +79,13 @@ function place_order($pdo)
     try {
         $datetime = date('Y-m-d H:i:s');
         $get_total = order_summary(400, 1000);
-        $query = fetch_cart($pdo);
-        $row = $query->fetch(PDO::FETCH_ASSOC);
+        $cart_data = fetch_cart($pdo, $_SESSION['user_id']);
 
         $stmt = $pdo->prepare("INSERT INTO orders(user_id, order_date, order_total, 
         shipping_address, shipping_state, shipping_zip, shipping_city, full_name) VALUES
         (:uid, :order_date, :total_payment, :address, :province, :zip_code, :city, :name)");
 
-        $stmt->bindParam(':uid', $row['user_id'], PDO::PARAM_STR);
+        $stmt->bindParam(':uid', $cart_data['user_id'], PDO::PARAM_STR);
         $stmt->bindParam(':order_date', $datetime, PDO::PARAM_STR);
         $stmt->bindParam(':total_payment', $get_total['sub_total'], PDO::PARAM_STR);
         $stmt->bindParam(':address', $address, PDO::PARAM_STR);
@@ -96,6 +95,17 @@ function place_order($pdo)
         $stmt->bindParam(':name', $fullname, PDO::PARAM_STR);
 
         $stmt->execute();
+
+        $order_id = $pdo->lastInsertId();
+
+        if (isset($cart_data['stmt'])) {
+            $stmt = $pdo->prepare("INSERT INTO order_details(order_id, product_id, quantity, price) VALUES(:order_id, :pid, :qty, :price)");
+                
+            foreach ($cart_data['stmt'] as $item) {
+                $stmt->execute(array(':order_id' => $order_id, ':pid' => $item['pid'], ':qty' => $item['quantity'], ':price' => $item['sub_total']));
+            }
+        }
+
         echo <<<_END
         <h1 style="padding: 1em;">Your Order Has Been Placed!</h1>
         <p style="margin:1em; font-size: 1.1rem;">Thank you for ordering with us! We'll contact you by email with your order details.</p>

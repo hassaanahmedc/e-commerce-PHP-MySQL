@@ -49,11 +49,11 @@ require_once 'cart_crud.php';
             </table>
             <div class="cart_bottom">
                 <div class="cart_total">
-                    <span>Subtotal</span>
+                    <span>Subtotal </span>
                     <span>Rs. <?php echo $grand_total ?></span>
                 </div>
                 <input type="hidden" name="sub_total" value="<?php echo $grand_total ?>">
-                <div class="cart_btns">
+                <div class="cart_btns <?php echo update_cart($pdo); ?>">
                     <button type="submit" name="update" class="btns cart_update">Update Items</button>
                     <button type="submit" name="place_order" class="btns order_place">Checkout order</button>
                 </div>
