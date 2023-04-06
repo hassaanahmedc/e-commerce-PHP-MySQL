@@ -103,8 +103,9 @@ function create_cart($pdo, $product)
             $stmt->execute();
     
             $cart_id = $pdo->lastInsertId();
+            $_SESSION['cart_id'] = $cart_id;
         }
-        add_product_in_cart($pdo, $product, $cart_id);
+        add_product_in_cart($pdo, $product, $_SESSION['cart_id']);
         echo <<<_END
             <h1>Items added successfully to your cart!</h1>
             <a href="index.php">Shop more</a>

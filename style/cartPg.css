@@ -81,7 +81,7 @@ tr td {
 .cart_total {
 	display: flex;
 	justify-content: space-between;
-	width: 15%;
+	width: 18%;
 	padding: 1em 0;
 }
 
@@ -92,7 +92,9 @@ tr td {
 	justify-content: flex-end;
 	gap: 1em;
 }
-
+.hide-btn {
+	display: none;
+  }
 .cart_update {
 	outline: 2px solid var(--secondary_btn);
 	background: none;

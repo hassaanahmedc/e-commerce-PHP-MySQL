@@ -1,9 +1,9 @@
 <?php
 require_once 'verify.php';
 $grand_total =  0;
-function fetch_cart($pdo)
+function fetch_cart($pdo, $user_id)
 {
-    if (!isset($_SESSION['user_id'])) {
+    if (!isset($user_id)) {
         echo "<h2 style='text-align:center;'>Please login first!</h2>";
         exit;
     } else {
@@ -29,16 +29,16 @@ function fetch_cart($pdo)
 
         $query->bindParam(":uid", $uid, PDO::PARAM_INT);
         $query->execute();
-        $stmt = $query;
+
+        return array('stmt' => $query, 'user_id' => $uid);
     }
-    return $stmt;
 }
 
 function get_cart_items($pdo)
 {
     global $grand_total;
-    $query = fetch_cart($pdo);
-    while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+    $query = fetch_cart($pdo, $_SESSION['user_id']);
+    while ($row = $query['stmt']->fetch(PDO::FETCH_ASSOC)) {
         $user_id = $row['user_id'];
         $pid = $row['pid'];
         $Product_name = $row['name'];
@@ -80,16 +80,27 @@ function remove_cart_item($pdo)
         $stmt = $pdo->prepare("DELETE FROM cart_details WHERE product_id = :pid");
         $stmt->bindParam(':pid', $pid, PDO::PARAM_INT);
         $stmt->execute();
-        if ($stmt) {
-            header('Location: cart.php');
-        } else {
-            echo "Something went wrong";
+
+        // check if cart is empty after deleting item
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM cart_details WHERE cart_id = :cid");
+        $stmt->bindParam(':cid', $_SESSION['cart_id'], PDO::PARAM_INT);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+
+        if ($count == 0) {
+            $stmt = $pdo->prepare("DELETE FROM cart WHERE user_id = :uid");
+            $stmt->bindParam(':uid', $_SESSION['user_id'], PDO::PARAM_INT);
+            $stmt->execute();
         }
+
+        header('Location: cart.php');
     }
 }
+
 function update_cart($pdo)
 {
-    if (isset($_POST['update'])) {
+    $button_class = "";
+    if (isset($_POST['update']) && isset($_POST['pid'])) {
         $user_id = $_SESSION['user_id'];
         $item_prices = $_POST['item_price'];
         $qtys = $_POST['qty'];
@@ -113,9 +124,19 @@ function update_cart($pdo)
                 echo "Something went wrong";
             }
         }
-    }
-    if (isset($_POST['place_order'])) {
+    } elseif (isset($_POST['place_order']) && isset($_POST['pid'])) {
         header('Location: order.php');
     }
+
+    // check if cart is empty and set button class to "hide-btn" if it is
+    $user_id = $_SESSION['user_id'];
+    $query = $pdo->prepare("SELECT * FROM cart WHERE user_id=:user_id");
+    $query->bindParam(":user_id", $user_id, PDO::PARAM_INT);
+    $query->execute();
+    $cart_row = $query->fetch(PDO::FETCH_ASSOC);
+    if (!$cart_row) {
+        $button_class = "hide-btn";
+    }
+    return $button_class;
 }
 ?>
