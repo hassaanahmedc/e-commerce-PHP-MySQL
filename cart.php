@@ -4,6 +4,7 @@ session_start();
 session_regenerate_id();
 require_once 'verify.php';
 require_once 'cart_crud.php';
+require_once 'functions.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,16 +18,7 @@ require_once 'cart_crud.php';
     <link rel="stylesheet" href="style/style.css">
     <title>Product</title>
     <div class="nav_container">
-        <nav class="navbar">
-            <h1 class="navtxt">ShopEase</h1>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="cart.php">My Cart</a></li>
-            <li><a href="">Contact Us</a></li>
-            <li><a href="auth/login.php">Login</a></li>
-            <li><a href="auth/signup.php">Signup</a></li>
-            <li><a href="auth/logout.php">Logout</a></li>
-
-        </nav>
+        <?php navbar() ?>
     </div>
 </head>`
 
@@ -44,13 +36,17 @@ require_once 'cart_crud.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <?php get_cart_items($pdo); ?>
+                    <?php if (isset($_SESSION['user_id'])) {
+                        get_cart_items($pdo, $_SESSION['user_id']);
+                    } ?>
                 </tbody>
             </table>
             <div class="cart_bottom">
                 <div class="cart_total">
                     <span>Subtotal </span>
-                    <span>Rs. <?php echo $grand_total ?></span>
+                    <span>Rs.
+                        <?php echo $grand_total ?>
+                    </span>
                 </div>
                 <input type="hidden" name="sub_total" value="<?php echo $grand_total ?>">
                 <div class="cart_btns <?php echo update_cart($pdo); ?>">

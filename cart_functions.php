@@ -81,7 +81,7 @@ function add_product_in_cart($pdo, $product, $cart_id)
 function create_cart($pdo, $product)
 {
     if (!isset($_SESSION['user_id'])) {
-        echo "<h1>Please login first</h1>";
+        echo "<h1 style='padding:3em;'>Please login first</h1>";
         exit;
     }
     try {
@@ -105,9 +105,9 @@ function create_cart($pdo, $product)
             $cart_id = $pdo->lastInsertId();
             $_SESSION['cart_id'] = $cart_id;
         }
-        add_product_in_cart($pdo, $product, $_SESSION['cart_id']);
+        add_product_in_cart($pdo, $product, $cart_id);
         echo <<<_END
-            <h1>Items added successfully to your cart!</h1>
+            <h1 style='margin-top:3em;'>Items added successfully to your cart!</h1>
             <a href="index.php">Shop more</a>
             <a href="cart.php">Show cart</a>
         _END;

@@ -10,7 +10,7 @@ function render_items_by_category($pdo, $category = null)
         $query .= "ORDER BY product_id DESC";
     }
     $stmt = $pdo->prepare($query);
-    
+
     if ($category !== null) {
         $stmt->bindValue(':category', $category, PDO::PARAM_STR);
     }
@@ -38,7 +38,7 @@ function render_items_by_category($pdo, $category = null)
 }
 
 function render_selected_item($pdo, )
-{ 
+{
     if (isset($_GET['id'])) {
 
         $pid = $_GET['id'];
@@ -51,5 +51,46 @@ function render_selected_item($pdo, )
         }
         return $details;
     }
-}  
+}
+
+function navbar()
+{
+    if (isset($_SESSION['user_id'])) {
+        echo <<<_END
+        <nav class="navbar">
+            <h1 class="navtxt">ShopEase</h1>
+            <label for="toggle">
+                <i class="fa-solid fa-bars"></i>
+            </label>
+            <input type="checkbox" id="toggle" hidden>
+            <ul class="nav-uls">
+                <li><a href="index.php">Home</a></li>
+                <li><a href="cart.php">My Cart</a></li>
+                <li><a href="">Contact Us</a></li>
+                <li class="home-btn"><a href="auth/logout.php">Logout</a></li>
+            </ul>
+                    
+        </nav>
+
+_END;
+    }
+    if (!isset($_SESSION['user_id'])) {
+        echo <<<_END
+        <nav class="navbar">
+            <h1 class="navtxt">ShopEase</h1>
+            <label for="toggle">
+                <i class="fa-solid fa-bars"></i>
+            </label>
+            <input type="checkbox" id="toggle" hidden>
+            <ul class="nav-uls">
+                <li><a href="index.php">Home</a></li>
+                <li><a href="">Contact Us</a></li>
+                <li class="home-btn"><a href="auth/login.php">Login</a></li>
+            </ul>
+                
+        </nav>
+_END;
+    }
+}
+
 ?>

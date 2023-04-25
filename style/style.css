@@ -17,9 +17,14 @@ body {
 	background-color: #eff0f5;
 }
 
+.navbar label {
+	display: none;
+}
+
 .img_container {
 	background: #000;
 	position: relative;
+	object-fit: contain;
 }
 
 .img1 {
@@ -53,35 +58,44 @@ body {
 }
 
 .nav_container {
-	background: white;
-	color: black;
-	width: 100%;
-	min-height: 5vh;
-	margin-bottom: 1em;
+	background-color: white;
 }
 
 .navbar {
-	display: flex;
-	justify-content: center;
+	max-width: 1300px;
 	margin: 0 auto;
-	align-items: center
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	min-height: 55px;
+	padding: 0 1rem;
 }
 
-.navtxt {
-	width: 40%;
-	margin: 0;
-}
-
-.navbar a {
-	text-decoration: none;
-	text-align: center;
-}
-
-.navbar li {
-	text-align: center;
-	padding: 1% 2%;
+.navbar ul {
+	display: flex;
+	gap: 0.5rem;
 	list-style: none;
 }
+
+.navbar ul li a {
+	padding: 0.5em 2.5em;
+	text-decoration: none;
+	color: black;
+}
+
+.navbar ul li a:hover {
+	background-color: var(--primary_btn);
+	color: white;
+	border-radius: 30px;
+	transition: 0.3s all ease;
+}
+
+.navbar ul .home-btn a {
+	background-color: var(--secondary_btn);
+	color: white;
+	border-radius: 30px;
+}
+
 
 .product_heading {
 	text-align: center;
@@ -89,7 +103,6 @@ body {
 	padding-top: 0.3em;
 	font-weight: 300;
 }
-
 
 .wrapper {
 	width: 100%;
@@ -174,4 +187,62 @@ body {
 	width: 100%;
 	background: #e8e8e8;
 	border: none;
+}
+
+
+@media screen and (max-width: 850px) {
+	.items {
+		min-width: 265px;
+		width: 265px;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.items {
+		min-width: 265px;
+		width: 265px;
+	}
+}
+
+@media screen and (max-width: 730px) {
+	.navbar {
+		position: relative;
+	}
+
+	.navbar ul {
+		position: absolute;
+		flex-direction: column;
+		z-index: 999;
+		background-color: white;
+		gap: 2rem;
+		top: 55px;
+		right: 0;
+		padding: 2rem 1rem;
+		align-items: center;
+		transform: translateY(-200%);
+		transition: 0.5s ease-in-out;
+	}
+
+	.navbar label {
+		display: block;
+		cursor: pointer;
+	}
+
+	#toggle:checked~.nav-uls {
+		transform: translateY(0);
+	}
+}
+
+@media screen and (max-width: 530px) {
+	.item_container {
+		flex-wrap: wrap;
+	}
+
+	.items {
+		width: 100%;
+	}
+
+	.items img {
+		object-fit: contain;
+	}
 }
