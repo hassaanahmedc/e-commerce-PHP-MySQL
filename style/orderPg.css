@@ -16,16 +16,21 @@
 body {
 	background-color: #eff0f5;
 }
+
 .order_content_wrapper {
-	width: 74%;
-	margin: 0 auto;
+	margin: 3em auto;
 	height: 100vh;
 }
 
 .form_contaitner {
 	display: flex;
 	justify-content: center;
+	min-width: 800px;
+	overflow-x: scroll;
+	overflow-y: hidden;
+
 }
+
 .shipping_details {
 	width: 80%;
 	background: white;
@@ -48,10 +53,13 @@ body {
 }
 
 .order_summary {
-	margin: 2em;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	margin-left: 2em;
 	background: white;
 	padding: 2em;
 	border-radius: 10px;
+	max-width: 380px;
 }
 
 .split {
@@ -124,4 +132,9 @@ body {
 	font-weight: 400;
 }
 
-
+@media screen and (max-width: 860px) {
+	.split {
+		display: flex;
+		flex-direction: column;
+	}
+}

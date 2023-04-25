@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'verify.php';
+require_once 'functions.php';
 require_once 'order_functions.php';
 
 $summary = order_summary(400, 1000);
@@ -17,18 +18,10 @@ $summary = order_summary(400, 1000);
     <link rel="stylesheet" href="style/style.css">
     <title>Product</title>
     <div class="nav_container">
-        <nav class="navbar">
-            <h1 class="navtxt">ShopEase</h1>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="cart.php">My Cart</a></li>
-            <li><a href="">Contact Us</a></li>
-            <li><a href="auth/login.php">Login</a></li>
-            <li><a href="auth/signup.php">Signup</a></li>
-            <li><a href="auth/logout.php">Logout</a></li>
+        <?php navbar() ?>
         </nav>
     </div>
-</head>`
-
+</head>
 <body>
     <div class="order_content_wrapper">
         <form action="order_status.php" method="post">

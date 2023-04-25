@@ -1,6 +1,7 @@
 <?php
 require_once 'verify.php';
 require_once 'functions.php';
+session_start();
 
 $details = render_selected_item($pdo);
 foreach ($details as $product_details);
@@ -17,14 +18,7 @@ foreach ($details as $product_details);
     <link rel="stylesheet" href="style/prooductPg.css">
     <title>Product</title>
     <div class="nav_container">
-        <nav class="navbar">
-            <h1 class="navtxt">ShopEase</h1>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="cart.php">My Cart</a></li>
-            <li><a href="">Contact Us</a></li>
-            <li><a href="auth/login.php">Login</a></li>
-            <li><a href="auth/signup.php">Signup</a></li>
-            <li><a href="auth/logout.php">Logout</a></li>
+        <?php navbar() ?>
 
         </nav>
     </div>

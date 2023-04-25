@@ -1,14 +1,10 @@
 <?php
 require_once 'verify.php';
-$grand_total =  0;
+$grand_total = 0;
 function fetch_cart($pdo, $user_id)
 {
-    if (!isset($user_id)) {
-        echo "<h2 style='text-align:center;'>Please login first!</h2>";
-        exit;
-    } else {
-        $uid = $_SESSION['user_id'];
-        $query = $pdo->prepare("SELECT 
+    $uid = $user_id;
+    $query = $pdo->prepare("SELECT 
             users.user_id, 
             products.product_id AS pid, 
             products.name, 
@@ -27,50 +23,54 @@ function fetch_cart($pdo, $user_id)
             WHERE 
                 users.user_id=:uid;");
 
-        $query->bindParam(":uid", $uid, PDO::PARAM_INT);
-        $query->execute();
+    $query->bindParam(":uid", $uid, PDO::PARAM_INT);
+    $query->execute();
 
-        return array('stmt' => $query, 'user_id' => $uid);
-    }
+    return array('stmt' => $query, 'user_id' => $uid);
+
 }
-
-function get_cart_items($pdo)
+function get_cart_items($pdo, $uid)
 {
     global $grand_total;
-    $query = fetch_cart($pdo, $_SESSION['user_id']);
-    while ($row = $query['stmt']->fetch(PDO::FETCH_ASSOC)) {
-        $user_id = $row['user_id'];
-        $pid = $row['pid'];
-        $Product_name = $row['name'];
-        $item_price = $row['item_price'];
-        $image = $row['img'];
-        $qty = $row['quantity'];
-        $sub_total = $row['sub_total'];
 
-        echo <<<_END
-            <tr>
-                <td class='t_img'><a href="product.php?id=$pid"><img src="imgs/$image" alt=""></a></td>
-                <td>
-                    <a href="product.php?id=$pid">$Product_name</a>
-                    <br>
-                    <a href="cart.php?pid=$pid">Remove items</a>
+    if (isset($uid) && $uid > 0) {
+
+        $query = fetch_cart($pdo, $uid);
+        while ($row = $query['stmt']->fetch(PDO::FETCH_ASSOC)) {
+            $pid = $row['pid'];
+            $Product_name = $row['name'];
+            $item_price = $row['item_price'];
+            $image = $row['img'];
+            $qty = $row['quantity'];
+            $sub_total = $row['sub_total'];
+
+            echo <<<_END
+                <tr>
+                    <td class='t_img'><a href="product.php?id=$pid"><img src="imgs/$image" alt=""></a></td>
+                    <td>
+                        <a href="product.php?id=$pid">$Product_name</a>
+                        <br>
+                        <a href="cart.php?pid=$pid">Remove items</a>
+                    </td>
+                    <td>Rs $item_price</td>
+                    <td>
+                    <input type="hidden" name="pid[]" value="$pid">
+                    <input type="hidden" name="item_price[]" value="$item_price">
+                    <input type="number" style='width: 50px;' name="qty[]" value='$qty' min='1'>
                 </td>
-                <td>Rs $item_price</td>
-                <td>
-                <input type="hidden" name="pid[]" value="$pid">
-                <input type="hidden" name="item_price[]" value="$item_price">
-                <input type="number" style='width: 50px;' name="qty[]" value='$qty' min='1'>
-            </td>
-                <td>Rs. $sub_total</td>
-            </tr>
-            _END;
-        $grand_total += $sub_total;
+                    <td>Rs. $sub_total</td>
+                </tr>
+                _END;
+            $grand_total += $sub_total;
+        }
+
+        $_SESSION['sub_total'] = $grand_total;
+
+        remove_cart_item($pdo);
+        update_cart($pdo);
+    } else {
+        echo "<h2 style='text-align:center;'>Please login first!</h2>";
     }
-
-    $_SESSION['sub_total'] = $grand_total;
-
-    remove_cart_item($pdo);
-    update_cart($pdo);
 }
 
 function remove_cart_item($pdo)

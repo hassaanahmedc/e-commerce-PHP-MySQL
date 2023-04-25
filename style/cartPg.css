@@ -16,10 +16,16 @@
 body {
 	background-color: #eff0f5;
 }
+
 .cart_content_wrapper {
 	width: 80%;
-	margin: 0 auto;
+	margin: 3em auto;
 	background-color: white;
+	overflow-x: scroll;
+}
+
+form {
+	min-width: 500px;
 }
 
 .cart_heading {
@@ -50,6 +56,8 @@ td a {
 	width: 100%;
 	margin: auto;
 	max-width: 800px;
+	overflow: scroll;
+	padding: 0 1rem;
 }
 
 .cart_table thead tr td {
@@ -74,8 +82,10 @@ tr td {
 	display: flex;
 	align-items: flex-end;
 	flex-direction: column;
-	padding-right: 183px;
+	padding-right: 30px;
 	padding-bottom: 30px;
+	max-width: 800px;
+	margin: 0 auto;
 }
 
 .cart_total {
@@ -83,6 +93,12 @@ tr td {
 	justify-content: space-between;
 	width: 18%;
 	padding: 1em 0;
+	flex-wrap: wrap;
+	column-gap: 20px;
+}
+
+.cart_total span:nth-child(2) {
+	white-space: nowrap;
 }
 
 .cart_btns {
@@ -92,9 +108,11 @@ tr td {
 	justify-content: flex-end;
 	gap: 1em;
 }
+
 .hide-btn {
 	display: none;
-  }
+}
+
 .cart_update {
 	outline: 2px solid var(--secondary_btn);
 	background: none;
