@@ -96,4 +96,5 @@ form div{
 
   textarea{
 	height: 33vh;
+	max-width: 639px;
   }

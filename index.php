@@ -72,7 +72,7 @@ session_start();
     </div>
     <footer>
         <div class="footer_container">
-            <p class="footer_text">Created and Designed by Hassaan</p>
+            <p class="footer_text">&copy; 2023 Flavory. All rights reserved.</p>
         </div>
     </footer>
 </body>
