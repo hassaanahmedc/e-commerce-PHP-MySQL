@@ -19,10 +19,10 @@ session_start();
         </div>
 
         <div class="img_container">
-            <img class='img1' src="header_imgs/new.jpg" alt="imgae1">
-            <!-- <img class='img2' src="/header_imgs/img2.jpg" alt="imgae2">
-            <img class='img3' src="/header_imgs/img3.jpg" alt="imgae3">
-            <img class='img4' src="/header_imgs/img4.jpg" alt="imgae4"> -->
+            <img class='hero-img img1' src="header_imgs/new.jpg" alt="imgae1">
+            <!-- <img class="hero-img img2" src="header_imgs/img1.jpg" alt="imgae2"> -->
+            <!-- <img class='hero-img img3' src="header_imgs/img3.jpg" alt="imgae3"> -->
+            <!-- <img class='hero-img img4' src="header_imgs/img4.jpg" alt="imgae4"> -->
             <div class="headertxt">
                 <h1 class="headertxt1">ShopEase</h1>
                 <p class="headertxt2">Essential items for everyday use!</p>
@@ -72,7 +72,7 @@ session_start();
     </div>
     <footer>
         <div class="footer_container">
-            <p class="footer_text">Created and Designed by Hassaan</p>
+            <p class="footer_text">&copy; 2023 Flavory. All rights reserved.</p>
         </div>
     </footer>
 </body>

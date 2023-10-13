@@ -66,7 +66,7 @@ function navbar()
             <ul class="nav-uls">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="cart.php">My Cart</a></li>
-                <li><a href="">Contact Us</a></li>
+                <li><a href="contact_us.php">Contact Us</a></li>
                 <li class="home-btn"><a href="auth/logout.php">Logout</a></li>
             </ul>
                     
@@ -84,7 +84,7 @@ _END;
             <input type="checkbox" id="toggle" hidden>
             <ul class="nav-uls">
                 <li><a href="index.php">Home</a></li>
-                <li><a href="">Contact Us</a></li>
+                <li><a href="contact_us.php">Contact Us</a></li>
                 <li class="home-btn"><a href="auth/login.php">Login</a></li>
             </ul>
                 
